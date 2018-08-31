@@ -44,7 +44,12 @@ android {
             applicationId "com.udacity.gradle.builditbigger.paid"
         }
     }
-    sourceSets { paid { java.srcDirs = ['src/paid/java', 'src/paid/java/'] } }
+    sourceSets {
+        paid { java.srcDirs = ['src/paid/java', 'src/paid/java/'] } 
+        free {
+manifest.srcFile 'src/free/AndroidManifest.xml'
+}
+}
 }
 
 dependencies {
@@ -52,7 +57,7 @@ dependencies {
     endpointsServer project(path: ':backend', configuration: 'endpoints')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    freeImplementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation('com.google.api-client:google-api-client:1.23.0') {
         exclude group: 'com.google.guava'
     }

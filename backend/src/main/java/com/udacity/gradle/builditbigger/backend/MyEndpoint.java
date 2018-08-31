@@ -17,7 +17,7 @@ import com.tamrakar.uguess.jokesources.JokesProvider;
 )
 public class MyEndpoint {
 
-    /** A simple endpoint method that takes a name and says Hi back */
+    /** A simple endpoint method that gets the joke from Jokes Provider */
     @ApiMethod(name = "tellJoke")
     public MyBean tellJoke() {
         MyBean response = new MyBean();
