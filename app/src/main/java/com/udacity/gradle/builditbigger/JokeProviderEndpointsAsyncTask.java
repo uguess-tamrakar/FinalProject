@@ -3,18 +3,20 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.tamrakar.uguess.jokesdisplay.JokeDisplayActivity;
-import com.tamrakar.uguess.jokesources.JokesProvider;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
 public class JokeProviderEndpointsAsyncTask extends AsyncTask<Object, Void, String> {
+
+    private static final String LOG_TAG = JokeProviderEndpointsAsyncTask.class.getSimpleName();
     private MyApi myApiService = null;
     private Context mContext;
 
@@ -43,15 +45,15 @@ public class JokeProviderEndpointsAsyncTask extends AsyncTask<Object, Void, Stri
         try {
             return myApiService.tellJoke().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            Log.d(LOG_TAG, e.getMessage());
+            return "";
         }
     }
 
     @Override
     protected void onPostExecute(String result) {
         Intent intent = new Intent(mContext, JokeDisplayActivity.class);
-        JokesProvider jokesProvider = new JokesProvider();
-        intent.putExtra(JokeDisplayActivity.JOKE_KEY, jokesProvider.tellJoke());
+        intent.putExtra(JokeDisplayActivity.JOKE_KEY, result);
         mContext.startActivity(intent);
     }
 }
